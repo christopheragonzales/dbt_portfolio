@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'my_new_project'
+name: 'portfolio'
 version: '1.0.0'
 config-version: 2
 
@@ -24,6 +24,10 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
+flags:
+  use_managed_iceberg: true
+  use_materialization_v2: true
+
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -36,7 +40,21 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  my_new_project:
+  portfolio:
     # Applies to all files under models/example/
     example:
       +materialized: table
+
+seeds:
+  portfolio:
+    +database: portfolio
+    +schema: VIN
+    vin_assigned_values:
+      +enabled: true
+      +column_types:
+        vin_char: varchar(1)
+        assigned_value: varchar(1)
+    vin_position_and_weight_factor:
+      +column_types:
+        position: varchar(2)
+        weight_factor: varchar(2)
