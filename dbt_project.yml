@@ -27,6 +27,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 flags:
   use_managed_iceberg: true
   use_materialization_v2: true
+  use_concurrent_microbatch: true
 
 
 # Configuring models
@@ -58,3 +59,7 @@ seeds:
       +column_types:
         position: varchar(2)
         weight_factor: varchar(2)
+    destination_market:
+      +column_types:
+        id: int
+        destination_market: varchar(100)
